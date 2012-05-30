@@ -1,0 +1,902 @@
+/* ================================================= */
+/* = Webkit Inspector Dark Theme by Nicolas Artman = */
+/* ================================================= */
+
+  /* Note! This is still quite a work in progress, and the code is VERY messy
+   * still. Much of the visual work is done on the element tab and the script
+   * tab, but many of the other tabs are entirely unusable with this theme.
+   * So use this at your own risk, and enjoy!
+   *
+   * Also, Apple has copyright notices all over the inspector files, so I have
+   * reproduced their notice below just in case. I don't think I directly copied
+   * anything, but by virtue of having the same CSS class names, it looks very
+   * very similar. Hopefully Oracle doesn't sue me :P
+   */
+  
+/* ============================================ */
+/* = Apple Copyright Notice From devtools.css = */
+/* ============================================ */
+  
+  /*
+   * Copyright (C) 2009 Apple Inc.  All rights reserved.
+   *
+   * Redistribution and use in source and binary forms, with or without
+   * modification, are permitted provided that the following conditions
+   * are met:
+   *
+   * 1.  Redistributions of source code must retain the above copyright
+   *     notice, this list of conditions and the following disclaimer.
+   * 2.  Redistributions in binary form must reproduce the above copyright
+   *     notice, this list of conditions and the following disclaimer in the
+   *     documentation and/or other materials provided with the distribution.
+   * 3.  Neither the name of Apple Computer, Inc. ("Apple") nor the names of
+   *     its contributors may be used to endorse or promote products derived
+   *     from this software without specific prior written permission.
+   *
+   * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
+   * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+   * DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS CONTRIBUTORS BE LIABLE FOR ANY
+   * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+   * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   */
+  
+
+/* ======== */
+/* = TODO = */
+/* ======== */
+
+/*
+
+  1. icons, all the icons are still ugly
+  2. Steb debugging icons in upper-right
+  10. Make it easier to change font size, for those without poor vision
+
+*/
+
+/* ================ */
+/* = Keep at top! = */
+/* ================ */
+
+#-webkit-web-inspector {
+  -webkit-transition: background-color 2.5s linear;
+}
+
+#-webkit-web-inspector .editing, #-webkit-web-inspector .editing *, #-webkit-web-inspector .child-editing {
+  background-color: #070707 !important;
+  color: #D7D7D7 !important;
+  text-decoration: none !important;
+}
+
+#console-messages .outline-disclosure li.parent::before {
+  content: url(chrome-devtools://devtools/Images/treeRightTriangleWhite.png) !important;
+}
+
+#console-messages .properties-tree li.parent::before {
+/*  content: url(chrome-devtools://devtools/Images/treeRightTriangleWhite.png) !important;*/
+}
+#console-messages .properties-tree li.parent.expanded::before {
+/*  content: url(chrome-devtools://devtools/Images/treeRightTriangleWhite.png) !important;*/
+}
+
+/* ========== */
+/* = Prompt = */
+/* ========== */
+
+#console-prompt {
+  color: #D7D7D7 !important;
+}
+/* image that appears before each prompt in the console */
+#console-prompt::before {
+    background: none !important;
+    content: '>' !important;
+    font-size: 16px !important;
+    color: #09f !important;
+    top: 0em !important;
+    margin-top: 0.15em !important;
+    font-weight: bold !important;
+    font-family: 'Arial' !important;
+}
+#console-messages .console-user-command::before {
+    background: none !important;
+    background-image: none !important;
+    content: '>' !important;
+    font-size: 16px !important;
+    color: #BBB !important;
+    top: 0em !important;
+    margin-top: 0.15em !important;
+    font-weight: bold !important;
+    font-family: 'Arial' !important;
+}
+#console-messages .console-user-command-result.console-log-level::before {
+    background: none !important;
+    background-image: none !important;
+    content: '–' !important;
+    font-size: 16px !important;
+    color: #BBB !important;
+    top: 0.15em !important;
+    margin-top: 0em !important;
+    font-weight: bold !important;
+    font-family: 'Arial' !important;
+}
+.console-error-level::before {
+    top: 0.7em !important; /* centers it a little better. originally 0.8 em */
+}
+
+/*#console-prompt::before {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjRGNTc2MTZDMTA2MTFFMDgwRUZGQ0JCMjgzMzU0MTYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjRGNTc2MTdDMTA2MTFFMDgwRUZGQ0JCMjgzMzU0MTYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MzM3N0Y2MUMxMDUxMUUwODBFRkZDQkIyODMzNTQxNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MzM3N0Y2MkMxMDUxMUUwODBFRkZDQkIyODMzNTQxNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Plf0eOsAAAB4SURBVHjaYvz//z8DMYAFxph+BqyhA8qtQFaUacKIUAgFLkBsDMSCUMXvYRJMaApdgfgsEKcB8W6oJqwK30MVr4YqOgPEodgUgoASkkkgjfewKSyHmqIEdYIJlEZR6ILk606oonsYwQMEe6A+PQtlowBGYgMcIMAAF2wcFPVNZx8AAAAASUVORK5CYII=) !important;
+  color: #fff !important;
+}
+*/
+
+/* ========== */
+/* = Layout = */
+/* ========== */
+
+#-webkit-web-inspector #storage-views .script-view,
+#-webkit-web-inspector #network-views .script-view,
+#-webkit-web-inspector #script-resource-views .script-view {
+  color: #ccc !important;
+}
+
+/*#storage-views .script-view,
+#elements-content,
+#network-views .text-editor-contents,
+#script-resource-views .script-view {
+  background: #070707 !important;
+  font-size: 16px !important;
+}*/
+
+#elements-content .highlight {
+  color: #D7D7D7;
+}
+
+#elements-content li.hovered:not(.selected) .selection {
+  background: rgba(255, 255, 255, .10) !important;
+}
+
+#elements-content .selection.selected {
+  z-index: 0 !important;
+}
+
+#elements-content ol:focus li.selected .selection {
+  background: #3F4360 !important;
+}
+
+#elements-content .selected .highlight {
+  position: relative;
+  z-index: 2;
+}
+
+#elements-content .selected {
+  background-color: #4c4d5d !important;
+}
+
+#elements-content .editing {
+  background-color: #242424 !important;
+}
+
+#elements-content .parent::before {
+  content: url(chrome-devtools://devtools/Images/treeRightTriangleWhite.png) !important;
+  position: relative;
+  z-index: 999;
+}
+
+#elements-content .parent.expanded::before {
+  content: url(chrome-devtools://devtools/Images/treeDownTriangleWhite.png) !important;
+}
+
+/* ======================= */
+/* = Syntax Highlighting = */
+/* ======================= */
+
+#-webkit-web-inspector .webkit-css-comment {
+    color: #82C87B !important;
+}
+
+#-webkit-web-inspector .webkit-css-color {
+    color: rgb(7, 144, 154) !important;
+}
+
+/* Strings */
+#-webkit-web-inspector .webkit-css-url, .webkit-css-string,
+#-webkit-web-inspector .webkit-javascript-string, .webkit-javascript-regexp,
+#-webkit-web-inspector .console-formatted-string {
+  color: #F1E9A4 !important;
+}
+
+#-webkit-web-inspector .webkit-css-keyword {
+  color: #A996C1 !important;
+}
+
+#-webkit-web-inspector .webkit-css-number {
+    color: #D7D7D7 !important;
+}
+
+#-webkit-web-inspector .webkit-css-selector {
+    color: #AED2E4 !important;
+}
+
+#-webkit-web-inspector .webkit-css-important {
+    color: rgb(200, 0, 180);
+}
+
+#-webkit-web-inspector .webkit-javascript-comment {
+  color: #82C87B !important;
+}
+
+#-webkit-web-inspector .webkit-javascript-keyword {
+    color: #ED9895 !important;
+}
+
+#-webkit-web-inspector .webkit-javascript-number,
+#-webkit-web-inspector .console-formatted-number {
+    color: #D7D7D7 !important;
+}
+
+#-webkit-web-inspector #console-messages .console-message,
+#-webkit-web-inspector .webkit-javascript-ident {
+    color: #D7D7D7 !important;
+}
+
+#-webkit-web-inspector .webkit-html-comment {
+    /* Keep this in sync with view-source.css (.webkit-html-comment) */
+    color: #82C87B !important;
+}
+
+#-webkit-web-inspector .webkit-html-tag {
+    /* Keep this in sync with view-source.css (.webkit-html-tag) */
+    color: #DCAFDD !important;
+}
+
+#-webkit-web-inspector .webkit-html-doctype {
+    /* Keep this in sync with view-source.css (.webkit-html-doctype) */
+    color: #D7D7D7 !important;
+}
+
+#-webkit-web-inspector .webkit-html-attribute-name {
+    /* Keep this in sync with view-source.css (.webkit-html-attribute-name) */
+    color: #B8D6FA !important;
+}
+
+#-webkit-web-inspector .webkit-html-attribute-value {
+    /* Keep this in sync with view-source.css (.webkit-html-attribute-value) */
+    color: #F1E9A4 !important;
+}
+
+#-webkit-web-inspector .webkit-html-external-link, .webkit-html-resource-link {
+    /* Keep this in sync with view-source.css (.webkit-html-external-link, .webkit-html-resource-link) */
+    color: #9EA7A5 !important;
+/*    text-decoration: none !important;*/
+}
+
+#-webkit-web-inspector .webkit-html-external-link:hover {
+    /* Keep this in sync with view-source.css (.webkit-html-external-link:hover) */
+    text-decoration: underline;
+}
+
+/* ================= */
+/* = Step Debugger = */
+/* ================= */
+
+#-webkit-web-inspector .webkit-execution-line.webkit-line-content {
+  background-color: #222 !important;
+  outline: 1px solid #09f !important;
+}
+
+/* right hand pane call stack */
+
+#-webkit-web-inspector #scripts-debug-sidebar-contents {
+  color: #D7D7D7 !important;
+  font-size: 14px !important;
+  top: 30px !important;
+}
+
+#-webkit-web-inspector #scripts-debug-sidebar-contents:hover .placard:nth-of-type(2n) {
+    background-color: #001726 !important;
+}
+
+#-webkit-web-inspector #scripts-debug-sidebar-contents .placard:nth-of-type(2n) {
+    background-color: black !important;
+}
+
+#-webkit-web-inspector #scripts-debug-sidebar-contents .placard .title {  
+    color: #D7D7D7 !important;
+}
+
+#-webkit-web-inspector #scripts-debug-sidebar-contents .placard.selected { 
+  background-image: none !important;
+  background: #333 !important;
+  outline: 1px solid #777;
+}
+
+#-webkit-web-inspector #scripts-debug-sidebar-contents:hover .placard.selected { 
+  background-image: none !important;
+  background: #333 !important;
+  outline: 1px solid #09f;
+}
+
+/* uncategorized - line numbers in gutter */
+
+#-webkit-web-inspector .text-editor-lines {
+  background-color: #222 !important;
+  border: none !important;
+  border-right: 1px solid #555 !important;
+}
+/* actual line number text */
+#-webkit-web-inspector .webkit-line-number {
+   color: #999 !important; 
+}
+/* line number text when it's a breakpoint */
+#-webkit-web-inspector .webkit-breakpoint .webkit-line-number-outer {
+  color: #D7D7D7 !important;
+}
+/* removes red arrow during step debugging showing current execution line */
+/* with breakpoint */
+#-webkit-web-inspector .webkit-breakpoint.webkit-execution-line .webkit-line-number-outer {
+  -webkit-border-image: url(chrome-devtools://devtools/Images/breakpointBorder.png) 0 14 0 2 !important;
+}
+/* execution line without breakpoint - just show line number, no arrow */
+#-webkit-web-inspector .webkit-execution-line .webkit-line-number-outer {
+  -webkit-border-image: none !important;
+  color: #D7D7D7 !important;
+/*  outline: 1px solid #09f !important;*/
+}
+/* actual line of code where a breakpoint was set, when hovered */
+#-webkit-web-inspector .webkit-line-content.webkit-breakpoint:hover {
+/*  background-color: #333 !important;*/
+/*  outline: 1px solid #09f !important;*/
+}
+
+
+/* BEGIN CUSTOM SCROLLBAR */
+
+#-webkit-web-inspector ::-webkit-scrollbar {
+    width:  10px !important;
+    height: 10px !important;
+}
+ 
+/* Track */
+#-webkit-web-inspector ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+    -webkit-border-radius: 4px !important;
+    border-radius: 4px !important;
+}
+
+/* Handle */
+#-webkit-web-inspector ::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 1ex !important;
+  border-radius: 1ex !important;
+  background: rgba(130,130,130,0.5) !important; 
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+}
+#-webkit-web-inspector ::-webkit-scrollbar-thumb:hover {
+  background: #555 !important; 
+}
+#-webkit-web-inspector ::-webkit-scrollbar-thumb:vertical {
+  border-right: 2px solid #070707 !important;
+  border-left: 2px solid #070707 !important;
+}
+#-webkit-web-inspector ::-webkit-scrollbar-thumb:horizontal {
+  border-top: 3px solid #070707 !important;
+  border-bottom: 3px solid #070707 !important;
+}
+
+#-webkit-web-inspector ::-webkit-resizer {
+  display: none !important;
+  background-color: black !important;
+}
+
+/* END CUSTOM SCROLLBAR */
+
+/* Custom checkboxes */
+#-webkit-web-inspector input[type=checkbox] {
+  font-size: 16px;
+  position: relative;
+  border: 1px solid #262626;
+  display: inline-block;
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
+  width: 1em;
+  height: 1em;
+/*  vertical-align: middle !important;*/
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+  -webkit-appearance: none;
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.1),
+                      inset 0 0 1px rgba(255,255,255, 0.4);
+  -webkit-border-radius: 3px;
+}
+
+#-webkit-web-inspector input[type=checkbox]:active {
+  background: -webkit-linear-gradient(
+    top, rgba(255,255,255,0.15), rgba(255,255,255,0.3)
+  );
+}
+
+#-webkit-web-inspector input[type=checkbox]:checked::after {
+  position: absolute;
+  content: '';
+  left: 15%;
+  top: -10%;
+  height: 40%;
+  width: 90%;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+  -webkit-box-shadow: -1px 1px 0 rgba(0,0,0,0.8);
+  -webkit-transform: rotate(-45deg);
+}
+
+/* break point list*/
+
+#-webkit-web-inspector .breakpoint-list li {
+  color: #D7D7D7 !important;
+}
+
+/* goto */
+#-webkit-web-inspector .breakpoint-list li:not(:first-child) {
+  border-top: 1px solid #555 !important;
+/*  background-color: # !important;*/
+}
+
+#-webkit-web-inspector .breakpoint-list .checkbox-elem {
+  visibility: hidden !important;
+}
+
+#-webkit-web-inspector .breakpoint-list:hover .checkbox-elem {
+  visibility: visible !important;
+}
+
+#-webkit-web-inspector .pane .breakpoint-hit,
+#-webkit-web-inspector .pane > .body .placard + .info {
+  color: #D7D7D7 !important;
+  background-color: #272727 !important;
+}
+
+/* removes the disclosure triangles in front of right hand panel stuff */
+#-webkit-web-inspector .section .header::before {
+  content: none !important;
+}
+
+/* =========== */
+/* = Console = */
+/* =========== */
+
+/* console and step debugger right hand pane */
+#-webkit-web-inspector #console-messages {
+  font-family: 'Monaco', Menlo, monospace !important;
+  background: #070707;
+}
+
+#-webkit-web-inspector #console-messages .console-formatted-object {
+  color: #D7D7D7 !important;
+}
+
+#-webkit-web-inspector #console-messages .console-log-level .console-message-text .title,
+#-webkit-web-inspector #console-messages .console-log-level .console-message-text .subtitle,
+#-webkit-web-inspector #console-messages .console-log-level .console-formatted-object.value,
+#-webkit-web-inspector .properties-tree .console-formatted-object.value,
+#-webkit-web-inspector #console-messages .console-log-level .console-formatted-array.value,
+#-webkit-web-inspector .split-view-sidebar-right .pane .section .title {
+  color: #ED9895 !important;
+}
+
+#-webkit-web-inspector #console-messages .console-user-command > .console-message-text {
+  color: #777 !important;
+}
+
+#-webkit-web-inspector #console-messages .console-message-text .console-formatted-object .name,
+#-webkit-web-inspector #scripts-debug-sidebar-contents .section .properties .name,
+#-webkit-web-inspector .split-view-sidebar-right .name {
+  color: #AED2E4 !important;
+}
+
+#-webkit-web-inspector .console-message, .console-user-command {
+  border: none !important;
+}
+
+/* error messages */
+#-webkit-web-inspector .console-error-level .console-message-text div.title, 
+#-webkit-web-inspector #scripts-debug-sidebar-contents .section .title,
+#-webkit-web-inspector #scripts-debug-sidebar-contents .section .properties .console-formatted-object,
+#-webkit-web-inspector #scripts-debug-sidebar-contents .section .properties .console-formatted-node
+{
+  color: #ED9895 !important;
+}
+
+/* ================= */
+/* =     Stuff     = */
+/* ================= */
+
+
+/* Split view's left sidebar - as in the resources tab, for example */
+#-webkit-web-inspector .split-view-sidebar-left,
+#-webkit-web-inspector #scripts-navigator-tabbed-pane {
+  background-color: #222 !important;
+}
+
+/* split view left sidebar text */
+#-webkit-web-inspector .split-view-sidebar-left li,
+#-webkit-web-inspector .base-storage-tree-element-title span,
+#-webkit-web-inspector #scripts-navigator-tabbed-pane li {
+  color: #D7D7D7 !important;
+  font-size: 16px !important;
+}
+
+/* split view right pane (as in the elements tab for css rules) */
+#-webkit-web-inspector .webkit-css-property {
+  color: #A996C1 !important;
+}
+
+#-webkit-web-inspector div.styles-section,
+#-webkit-web-inspector .first-styles-section {
+  background-color: #070707 !important;
+}
+
+#-webkit-web-inspector .webkit-html-resource-link {
+  color: #555 !important;
+}
+
+/* Displays names and links to files such as style.css:93 and user agent stylesheet
+   in the right hand css properties area. These hover effects light them up when
+   their section is hovered over */
+#-webkit-web-inspector .split-view-sidebar-right .styles-section:hover .webkit-html-resource-link,
+#-webkit-web-inspector .split-view-sidebar-right .styles-section:hover .header .subtitle
+{
+  color: #888 !important;
+}
+
+/* right pane expandable section headers (computed style, styles, etc)*/
+
+#-webkit-web-inspector .pane > .title {
+  height: 32px !important;
+  border-top: 1px #777 solid !important;
+  border-bottom: 1px #555 solid !important;
+  font-weight: normal !important;
+  text-shadow: none !important;
+  color: #CCC !important;
+  font-size: 16px !important;
+/*  top: 20px !important;*/
+  padding-top: 5px !important;
+  background: -webkit-linear-gradient(top, rgba(75,75,75,1) 0%,rgba(76,76,76,1) 19%,rgba(76,76,76,1) 48%,rgba(53,53,53,1) 100%) !important;
+  text-shadow: rgba(0,0,0,0.5) 0px 2px 2px !important;
+}
+#-webkit-web-inspector .pane > .title:hover {
+  background: -webkit-linear-gradient(top, rgba(101,101,101,1) 0%,rgba(102,102,102,1) 19%,rgba(102,102,102,1) 48%,rgba(82,82,82,1) 100%) !important;
+}
+#-webkit-web-inspector .pane > .title::before {
+  content: none !important;
+}
+
+#-webkit-web-inspector .styles-element-state-pane {
+  margin-top: -50px !important;
+  background: #222 !important;
+}
+
+#-webkit-web-inspector .styles-element-state-pane.expanded {
+  margin-top: 0px !important;
+  border-bottom: none !important;
+}
+
+#-webkit-web-inspector .styles-section:not(.first-styles-section) {
+  border-top: 1px solid #444 !important;
+}
+
+#-webkit-web-inspector .sidebar-separator {
+  font-weight: normal !important;
+  font-size: 14px !important;
+  text-shadow: none !important;
+  color: #AAA !important;
+  border: none !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  margin-top: 10px !important;
+  margin-bottom: 2px !important;
+  background: -webkit-linear-gradient(top, rgba(58,58,58,1) 0%,rgba(59,59,59,1) 19%,rgba(59,59,59,1) 48%,rgba(45,45,45,1) 100%) !important;
+}
+/* computed style label */
+#-webkit-web-inspector .split-view-sidebar-right .pane .sidebar-pane-subtitle {
+  line-height: 14px !important;
+  top: 0 !important;
+}
+/* the checkbox for "show inherited" in the computed style */
+#-webkit-web-inspector .split-view-sidebar-right .pane .sidebar-pane-subtitle input {
+  top: 0.4em !important;
+  right: 0.4em !important;
+}
+
+/* css properties in the right-hand styles section */
+
+/*#-webkit-web-inspector .styles-section .properties-tree {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}*/
+/*#-webkit-web-inspector .styles-section .enabled-button {
+  visibility: hidden !important;
+  display: block !important;
+}
+#-webkit-web-inspector .styles-section:hover .enabled-button {
+  visibility: visible !important;
+  display: block !important;
+}
+#-webkit-web-inspector .styles-section .properties-tree li {
+  margin-left: 0 !important;
+}
+*/
+
+/* css rule/style checkbox */
+#-webkit-web-inspector .styles-section .properties .enabled-button {
+  float: left !important;
+  font-size: 14px !important;
+  padding: 0 !important;
+  margin-top: 0.5em !important;
+  margin-right: 5px !important;
+  vertical-align: middle !important;
+}
+
+/* hide checkbox when it's unchecked */
+#-webkit-web-inspector .styles-section:hover .properties li.disabled .enabled-button {
+  display: block !important;
+}
+#-webkit-web-inspector .styles-section .properties li.disabled .enabled-button {
+  display: none !important;
+}
+
+/* Draggable divider between panes */
+#-webkit-web-inspector .split-view-resizer {
+  margin-right: 2px !important;
+/*  margin-left: 5px !important;*/
+  width: 1px !important;
+  background-color: #444 !important;
+}
+#-webkit-web-inspector .split-view-sidebar-right {
+  border-left: none !important;
+}
+
+/* Line highlighting when you go to a line in a source file */
+
+@-webkit-keyframes highlight-loc {
+	0%   { background-color: #070707; }
+	20% { background-color: #AAA;	}
+	100% { background-color: #222; }
+}
+
+#-webkit-web-inspector .webkit-highlighted-line.webkit-line-content {
+  background-color: #222 !important;
+  -webkit-animation: "highlight-loc" 1s 1 !important;
+}
+
+
+/* status bar icons and breadcrumbs are consolidated here
+ * to easily adjust their overall size */
+#-webkit-web-inspector .status-bar,
+#-webkit-web-inspector .status-bar button.status-bar-item,
+#-webkit-web-inspector .status-bar select.status-bar-item,
+#-webkit-web-inspector .crumbs .crumb {
+  height: 30px !important;
+/*  margin-top: 30px !important;*/
+}
+/* icons on the status bar buttons */
+#-webkit-web-inspector .status-bar button.status-bar-item .glyph {
+  margin-top: 3px !important;
+}
+
+#-webkit-web-inspector div.crumbs span {
+  font-size: 14px !important;
+  line-height: 30px !important;
+}
+
+
+/* breadcrumb bar and other status bars */
+#-webkit-web-inspector .status-bar {
+  background: -webkit-linear-gradient(top, rgba(107,107,107,1) 0%,rgba(109,109,109,1) 19%,rgba(109,109,109,1) 48%,rgba(76,76,76,1) 100%) !important;
+}
+
+/* buttons on the status bars */
+#-webkit-web-inspector .status-bar button.status-bar-item,
+#-webkit-web-inspector .status-bar select.status-bar-item {
+/* old, sharper gradient. too much  though. */
+/*  background: -webkit-linear-gradient(top, rgba(158,158,158,1) 0%,rgba(117,117,117,1) 43%,rgba(70,70,70,1) 100%) !important;*/
+  background: -webkit-linear-gradient(top, rgba(107,107,107,1) 0%,rgba(109,109,109,1) 19%,rgba(109,109,109,1) 48%,rgba(76,76,76,1) 100%) !important;
+}
+
+#-webkit-web-inspector .status-bar select#scripts-files {
+  background: -webkit-linear-gradient(top, rgba(107,107,107,1) 0%,rgba(109,109,109,1) 19%,rgba(109,109,109,1) 48%,rgba(76,76,76,1) 100%) !important;
+  background: -webkit-linear-gradient(top, rgba(75,75,75,1) 0%,rgba(76,76,76,1) 19%,rgba(76,76,76,1) 48%,rgba(53,53,53,1) 100%) !important;
+  color: #CCC !important;
+  font-size: 12px !important;
+  text-shadow: rgba(0,0,0,0.5) 0px 2px 2px !important;
+/*  text-shadow: none !important;*/
+  -webkit-border-image: none !important;
+}
+
+#-webkit-web-inspector .status-bar button.status-bar-item[title='Settings'] {
+  background: none !important;
+}
+
+#-webkit-web-inspector .status-bar button.status-bar-item:hover {
+  background: -webkit-linear-gradient(top, rgba(190,190,190,1) 0%,rgba(155,155,155,1) 43%,rgba(92,92,92,1) 100%) !important;
+}
+
+#-webkit-web-inspector .status-bar button.status-bar-item:active,
+#-webkit-web-inspector .status-bar select.status-bar-item:active {
+  background: -webkit-linear-gradient(top, rgba(125,125,125,1) 0%,rgba(82,82,82,1) 43%,rgba(44,44,44,1) 100%) !important;
+}
+#-webkit-web-inspector .status-bar select.status-bar-item#console-context {
+  font-size: 16px;
+  color: #000 !important;
+  text-shadow: none !important;
+  padding-right: 5px !important;
+  background-image: none !important;
+  background: -webkit-linear-gradient(top, rgba(107,107,107,1) 0%,rgba(109,109,109,1) 19%,rgba(109,109,109,1) 48%,rgba(76,76,76,1) 100%) !important;
+  border: none !important;
+  border-left: 2px #444 solid !important;
+  border-right: 1px #444 solid !important;
+}
+
+/* breadcrumbs */
+#-webkit-web-inspector div.crumbs span {
+  font-size: 14px !important;
+}
+
+#-webkit-web-inspector .crumbs {
+  text-shadow: none !important;
+  color: #222 !important;
+}
+#-webkit-web-inspector .crumbs .crumb {
+  color: #BBB !important;
+  background: -webkit-linear-gradient(top, rgba(91,91,91,1) 0%,rgba(93,93,93,1) 19%,rgba(93,93,93,1) 48%,rgba(65,65,65,1) 100%) !important;
+  border: none !important;
+  border-right: 1px solid #444 !important;
+  padding-right: 5px !important;
+  margin-right: 0px !important;
+}
+#-webkit-web-inspector .crumbs .crumb.selected,
+#-webkit-web-inspector .crumbs .crumb:hover {
+  background: -webkit-linear-gradient(top, rgba(75,75,75,1) 0%,rgba(76,76,76,1) 19%,rgba(76,76,76,1) 48%,rgba(53,53,53,1) 100%) !important;
+  color: #D7D7D7 !important;
+}
+#-webkit-web-inspector .crumbs .crumb.selected:hover  {
+  background: -webkit-linear-gradient(top, rgba(60,60,60,1) 0%,rgba(61,61,61,1) 19%,rgba(61,61,61,1) 48%,rgba(42,42,42,1) 100%) !important;  
+}
+
+/* main text rules for entire web inspector */
+#-webkit-web-inspector body {
+  font-family: "Monaco", "Lucida Grande", "Courier", sans-serif !important;
+}
+
+/*
+
+/* other customizations, most of which should be cleaned up */
+
+#-webkit-web-inspector #main {
+/*    position: absolute;
+    z-index: 1;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;*/
+/*    font-size: 16px !important;*/
+    color: #D7D7D7 !important;
+    background-color: #070707 !important;
+}
+
+#-webkit-web-inspector #main-panels {
+  bottom: 30px !important;
+}
+
+#-webkit-web-inspector .monospace, #-webkit-web-inspector .source-code {
+  line-height: 140% !important;
+  font-size: 16px !important;
+  font-family: "Monaco", Menlo, monospace !important;
+}
+
+
+
+/* ====================== */
+/* = The Timeline Panel = */
+/* ====================== */
+
+#-webkit-web-inspector #timeline-container .data {
+  color: #D7D7D7 !important;
+}
+#-webkit-web-inspector #timeline-container .data.dimmed {
+  color: #999 !important;
+}
+
+#-webkit-web-inspector #timeline-container #resources-container-content {
+/*  background-color: white !important;*/
+}
+
+/* Top area - the timeline overview / memory overview */
+#-webkit-web-inspector #timeline-overview-sidebar ol{
+  background-color: #070707 !important;
+}
+#-webkit-web-inspector #timeline-overview-panel #timeline-overview-grid {
+  background-color: #070707 !important;
+}
+#-webkit-web-inspector #timeline-overview-panel #timeline-overview-grid .timeline-graph-side.even {
+  background-color: rgba(255,255,255,0.15) !important;
+}
+
+#-webkit-web-inspector #timeline-overview-panel #timeline-overview-grid .timeline-overview-window-rulers
+{
+  background-color: #555 !important;
+  border-left:  1px solid #BBB !important;
+  border-right: 1px solid #BBB !important;
+}
+
+#-webkit-web-inspector .split-view-sidebar-left {
+  border-right: 1px solid #666 !important;
+}
+
+/* Every other row background coloring for the timeline graph results */
+#-webkit-web-inspector #timeline-container .timeline-graph-side,
+#-webkit-web-inspector #timeline-container .timeline-tree-item {
+  font-size: 14px !important;
+/*  background-color: rgba(7,7,7,0.05) !important;*/
+}
+#-webkit-web-inspector #timeline-container .timeline-graph-side.even,
+#-webkit-web-inspector #timeline-container .timeline-tree-item.even {
+  background-color: rgba(255,255,255,0.07) !important;
+}
+#-webkit-web-inspector #timeline-container .sidebar-tree-section,
+#-webkit-web-inspector #timeline-container .resources-dividers-label-bar
+#-webkit-web-inspector #timeline-overview-panel .sidebar-tree-section,
+#-webkit-web-inspector #timeline-overview-panel .resources-dividers-label-bar {
+  height: 24px !important; /* must be kept in sync with rule below */
+}
+#-webkit-web-inspector #timeline-container #timeline-graphs {
+  top: 25px !important; /* should be 1px greater than the rule above */
+}
+/* dividers between time increments (the x axis labels) */
+#-webkit-web-inspector #timeline-container .resources-dividers-label-bar,
+#-webkit-web-inspector #timeline-overview-panel .sidebar-tree-section,
+#-webkit-web-inspector #timeline-overview-panel .resources-dividers-label-bar {
+  background-color: #222 !important;
+  border-bottom: 1px solid #AAA !important;
+}
+/* lines on the x axis */
+#-webkit-web-inspector #timeline-container .resources-divider
+{
+  background-color: #444 !important;
+}
+/* lines on the x axis scale in the top area */
+#-webkit-web-inspector #timeline-overview-panel .resources-divider {
+  background-color: #777 !important;
+}
+#-webkit-web-inspector #timeline-container .resources-divider-label,
+#-webkit-web-inspector #timeline-overview-panel .resources-divider-label {
+  color: #D7D7D7 !important;
+  font-size: 9pt !important;
+}
+/* disclosure triangles */
+#-webkit-web-inspector #timeline-container .timeline-expandable-collapsed {
+  background-image: url(chrome-devtools://devtools/Images/disclosureTriangleSmallRightWhite.png) !important;
+}
+#-webkit-web-inspector #timeline-container .timeline-expandable-expanded {
+  background-image: url(chrome-devtools://devtools/Images/disclosureTriangleSmallDownWhite.png) !important;
+}
+
+
+/* info popovers */
+#-webkit-web-inspector .popover {
+  color: #D7D7D7 !important;
+  /* TODO: better color */
+  -webkit-border-image: url(data:image/png;base64,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) 25 25 25 25 !important;
+/*  border-width: 0 !important;*/
+}
+
+#-webkit-web-inspector .popover a {
+   color: #AAA !important;
+}
+
+#-webkit-web-inspector .popover .arrow {
+  background-image: 
+}
+
