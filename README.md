@@ -7,4 +7,4 @@ This is a work in progress full reskin of the chrome/safari web inspector, geare
 
 Here are some pictures of the current version:
 
-http://github.com/nicolasartman/webkit-inspector-dark-theme/raw/master/pics/inspector1.png
+<img src="http://github.com/nicolasartman/webkit-inspector-dark-theme/raw/master/pics/inspector1.png">
