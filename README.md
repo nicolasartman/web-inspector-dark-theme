@@ -12,3 +12,5 @@ Here are some pictures of the current version:
 <img src="https://github.com/nicolasartman/web-inspector-dark-theme/raw/master/pics/inspector2.png">
 
 As one can see, there are still plenty of tweaks to be made, but the elements, scripts, and console tabs should be good enough for daily use (in fact, I use this theme for almost all my development).
+
+Also, yes, I realize the text size is far too big for most people. I have poor eyesight. I'm working on centralizing the text sizing so others can easily adjust it to their liking.
