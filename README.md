@@ -8,3 +8,7 @@ This is a work in progress full reskin of the chrome/safari web inspector, geare
 Here are some pictures of the current version:
 
 <img src="https://github.com/nicolasartman/web-inspector-dark-theme/raw/master/pics/inspector1.png">
+
+<img src="https://github.com/nicolasartman/web-inspector-dark-theme/raw/master/pics/inspector2.png">
+
+As one can see, there are still plenty of tweaks to be made, but the elements, scripts, and console tabs should be good enough for daily use (in fact, I use this theme for almost all my development).
