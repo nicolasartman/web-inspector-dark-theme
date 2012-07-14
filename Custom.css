@@ -115,7 +115,7 @@
 #console-messages .console-user-command-result.console-log-level::before {
     background: none !important;
     background-image: none !important;
-    content: '–' !important;
+    content: '∴' !important;
     font-size: 16px !important;
     color: #BBB !important;
     top: 0.15em !important;
@@ -462,6 +462,12 @@
   content: none !important;
 }
 
+/* Lines between subsections in sections such as event listeners */
+.events-pane .section:not(:nth-of-type(1)) {
+/*  border-top: 1px solid #444 !important;*/
+    border-top: none !important;
+}
+
 /* =========== */
 /* = Console = */
 /* =========== */
@@ -472,7 +478,7 @@
   background: #070707;
 }
 
-#-webkit-web-inspector #console-messages .console-formatted-object {
+#-webkit-web-inspector #console-messages .console-formatted-object, #-webkit-web-inspector #console-messages .console-formatted-array {
   color: #D7D7D7 !important;
 }
 
@@ -483,6 +489,7 @@
 #-webkit-web-inspector #console-messages .console-log-level .console-formatted-array.value,
 #-webkit-web-inspector .split-view-sidebar-right .pane .section .title {
   color: #ED9895 !important;
+  text-shadow: none !important;
 }
 
 #-webkit-web-inspector #console-messages .console-user-command > .console-message-text {
@@ -503,7 +510,9 @@
 #-webkit-web-inspector .console-error-level .console-message-text div.title, 
 #-webkit-web-inspector #scripts-debug-sidebar-contents .section .title,
 #-webkit-web-inspector #scripts-debug-sidebar-contents .section .properties .console-formatted-object,
-#-webkit-web-inspector #scripts-debug-sidebar-contents .section .properties .console-formatted-node
+/*#-webkit-web-inspector #scripts-debug-sidebar-contents .section .properties .console-formatted-node*/
+#-webkit-web-inspector .section .console-formatted-node,
+#-webkit-web-inspector .section .console-formatted-array
 {
   color: #ED9895 !important;
 }
@@ -550,26 +559,61 @@
   color: #888 !important;
 }
 
+/* The metrics section of the css properties right-hand pane */
+.position, .margin, .border, .padding, .margin .content {
+  background-color: #070707 !important;
+}
+.margin .border {
+  background-color: #222 !important;
+}
+.position:hover .label, .margin:hover .label {
+  color: #D7D7D7 !important;
+}
+.position:hover {
+  background-color: #50719A !important;
+}
+.margin:hover {
+  background-color: #5C7B96 !important;
+}
+.border:hover{
+  background-color: #756F44 !important;
+}
+.padding:hover {
+  background-color: #247139 !important;
+}
+.content:hover {
+  background-color: #3F3F3F !important;
+}
+
+
 /* right pane expandable section headers (computed style, styles, etc)*/
 
 #-webkit-web-inspector .pane > .title {
   height: 32px !important;
   border-top: 1px #777 solid !important;
   border-bottom: 1px #555 solid !important;
+  color: #AFAFAF !important;
   font-weight: normal !important;
   text-shadow: none !important;
-  color: #CCC !important;
   font-size: 16px !important;
 /*  top: 20px !important;*/
   padding-top: 5px !important;
   background: -webkit-linear-gradient(top, rgba(75,75,75,1) 0%,rgba(76,76,76,1) 19%,rgba(76,76,76,1) 48%,rgba(53,53,53,1) 100%) !important;
   text-shadow: rgba(0,0,0,0.5) 0px 2px 2px !important;
 }
+#-webkit-web-inspector .pane.expanded > .title {
+  color: #D7D7D7 !important;
+}
 #-webkit-web-inspector .pane > .title:hover {
+  color: #CCC !important;
   background: -webkit-linear-gradient(top, rgba(101,101,101,1) 0%,rgba(102,102,102,1) 19%,rgba(102,102,102,1) 48%,rgba(82,82,82,1) 100%) !important;
 }
 #-webkit-web-inspector .pane > .title::before {
   content: none !important;
+}
+
+#-webkit-web-inspector .pane.expanded:nth-last-of-type(1) {
+  border-bottom: 1px solid #777 !important;
 }
 
 #-webkit-web-inspector .styles-element-state-pane {
@@ -791,9 +835,14 @@
 }
 
 #-webkit-web-inspector .monospace, #-webkit-web-inspector .source-code {
-  line-height: 140% !important;
+  line-height: 1.4em !important;
   font-size: 16px !important;
   font-family: "Monaco", Menlo, monospace !important;
+}
+
+/* Links in code eg: src="http://example.com" <-- the http://example.com part */
+#-webkit-web-inspector .source-code .webkit-html-attribute a {
+  color: #AAA !important;
 }
 
 
