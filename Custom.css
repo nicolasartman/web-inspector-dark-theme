@@ -560,28 +560,32 @@
 }
 
 /* The metrics section of the css properties right-hand pane */
-.position, .margin, .border, .padding, .margin .content {
+#-webkit-web-inspector .position, 
+#-webkit-web-inspector .margin, 
+#-webkit-web-inspector .border, 
+#-webkit-web-inspector .padding,
+#-webkit-web-inspector .margin .content {
   background-color: #070707 !important;
 }
-.margin .border {
+#-webkit-web-inspector .margin .border {
   background-color: #222 !important;
 }
-.position:hover .label, .margin:hover .label {
+#-webkit-web-inspector .position:hover .label, .margin:hover .label {
   color: #D7D7D7 !important;
 }
-.position:hover {
+#-webkit-web-inspector .position:hover {
   background-color: #50719A !important;
 }
-.margin:hover {
+#-webkit-web-inspector .margin:hover {
   background-color: #5C7B96 !important;
 }
-.border:hover{
+#-webkit-web-inspector .border:hover{
   background-color: #756F44 !important;
 }
-.padding:hover {
+#-webkit-web-inspector .padding:hover {
   background-color: #247139 !important;
 }
-.content:hover {
+#-webkit-web-inspector .content:hover {
   background-color: #3F3F3F !important;
 }
 
